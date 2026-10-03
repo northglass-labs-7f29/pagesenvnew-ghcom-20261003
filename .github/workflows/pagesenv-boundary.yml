@@ -4,8 +4,14 @@ on:
 permissions:
   contents: read
 jobs:
-  benign:
+  probe:
     runs-on: ubuntu-latest
+    environment: github-pages
     steps:
-      - name: Benign main control
-        run: echo MAIN_ONLY_CONTROL_20261003
+      - name: Digest protected canary
+        env:
+          PAGESENV_CANARY: ${{ secrets.PAGESENV_CANARY }}
+        run: |
+          if [ -z "$PAGESENV_CANARY" ]; then exit 2; fi
+          printf 'PAGESENV_DIGEST='
+          printf '%s' "$PAGESENV_CANARY" | sha256sum | cut -d' ' -f1
