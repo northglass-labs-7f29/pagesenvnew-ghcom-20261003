@@ -1,0 +1,11 @@
+name: pagesenv-boundary
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  benign:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Benign main control
+        run: echo MAIN_ONLY_CONTROL_20261003
